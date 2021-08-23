@@ -256,7 +256,7 @@ parse_inject_token(const char *const token,
 		   const bool fault_tokens_only)
 {
 	const char *val;
-	int intval;
+	int64_t intval;
 
 	if ((val = STR_STRIP_PREFIX(token, "when=")) != token) {
 		/*
@@ -268,7 +268,7 @@ parse_inject_token(const char *const token,
 		 * F..L+S
 		 */
 		char *end;
-		intval = string_to_uint_ex(val, &end, 0xffff, "+.");
+		intval = string_to_uint_ex(val, &end, 0xfffffffe, "+.");
 		if (intval < 1)
 			return false;
 
@@ -282,7 +282,7 @@ parse_inject_token(const char *const token,
 			 * F..L+S
 			 */
 			val = end + 2;
-			intval = string_to_uint_ex(val, &end, 0xffff, "+");
+			intval = string_to_uint_ex(val, &end, 0xfffffffe, "+");
 			if (intval < fopts->first || intval == INJECT_LAST_INF)
 				return false;
 			fopts->last = intval;
@@ -302,7 +302,7 @@ parse_inject_token(const char *const token,
 				 * F+S    == F..INF+S
 				 * F..L+S
 				 */
-				intval = string_to_uint_upto(val, 0xffff);
+				intval = string_to_uint_upto(val, 0xfffffffe);
 				if (intval < 1)
 					return false;
 				fopts->step = intval;
