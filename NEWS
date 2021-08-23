@@ -1,9 +1,18 @@
 Noteworthy changes in release ?.?? (????-??-??)
 ===============================================
 
+* Changes in behaviour
+ * Successive injection specifications for the same syscall no longer override
+   each other.
+
 * Improvements
   * Implemented decoding of memfd_secret and quotactl_fd syscalls,
     introduced in Linux 5.14.
+  * Added support for multiple injection specification for the same syscall,
+    with when= specifications accounted independently and "last wins" strategy
+    with respect to specific injection actions;  "none" pseudo-action added
+    to prevent syscall injection in accordance with its syscall and when=
+    specification.
   * Enhanced prctl syscall decoding.
   * Enhanced decoding of IFLA_* netlink attributes.
   * Enhanced decoding of MDBA_ROUTER_PATTR_* mdb router port netlink attributes.
